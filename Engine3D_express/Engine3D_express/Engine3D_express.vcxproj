@@ -53,6 +53,12 @@
       <AdditionalDependencies>openGL32.lib;glu32.lib;GLFW.lib;libpng16.lib;zlib.lib;glew32d.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>../..//3rd_party/glew-1.9.0/lib;../../\3rd_party\glfw-2.7.6\support\msvc100\Debug;../../\3rd_party\lpng1616\projects\vstudio\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
+    <PostBuildEvent>
+      <Command>cd $(ProjectDir)
+cd ../../
+copy .\3rd_party\lpng1616\projects\vstudio\Debug\libpng16.dll "$(OutDir)"libpng16.dll
+copy .\3rd_party\glew-1.9.0\bin\glew32d.dll "$(OutDir)"glew32d.dll</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -60,12 +66,21 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>../../Include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>../..//3rd_party/glew-1.9.0/lib;../../\3rd_party\glfw-2.7.6\support\msvc100\Release;../../\3rd_party\lpng1616\projects\vstudio\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>openGL32.lib;glu32.lib;GLFW.lib;libpng16.lib;zlib.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>cd $(ProjectDir)
+cd ../../
+copy .\3rd_party\lpng1616\projects\vstudio\Release\libpng16.dll "$(OutDir)"libpng16.dll
+copy .\3rd_party\glew-1.9.0\bin\glew32.dll "$(OutDir)"glew32.dll</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\3rd_party\tinyxml2-master\tinyxml2.h" />

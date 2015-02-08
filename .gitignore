@@ -16,3 +16,6 @@ Doxygen/
 *.tlog
 *.lastbuildstate
 *.log
+*.exp
+*.idb
+*.ipch
