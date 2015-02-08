@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{A0805649-A0F4-48F8-90FD-55C7D8F664F1}</ProjectGuid>
+    <RootNamespace>Engine3D_express</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>$(IncludePath)</IncludePath>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>../../Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>openGL32.lib;glu32.lib;GLFW.lib;libpng16.lib;zlib.lib;glew32d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>../..//3rd_party/glew-1.9.0/lib;../../\3rd_party\glfw-2.7.6\support\msvc100\Debug;../../\3rd_party\lpng1616\projects\vstudio\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\3rd_party\tinyxml2-master\tinyxml2.h" />
+    <ClInclude Include="..\..\Engine\AABox.hpp" />
+    <ClInclude Include="..\..\Engine\Camera.hpp" />
+    <ClInclude Include="..\..\Engine\Entity.hpp" />
+    <ClInclude Include="..\..\Engine\EntityManager.hpp" />
+    <ClInclude Include="..\..\Engine\Frustum.hpp" />
+    <ClInclude Include="..\..\Engine\IDrawable.hpp" />
+    <ClInclude Include="..\..\Engine\IEntity.hpp" />
+    <ClInclude Include="..\..\Engine\IMeshLoader.hpp" />
+    <ClInclude Include="..\..\Engine\Input.hpp" />
+    <ClInclude Include="..\..\Engine\ITransformable.hpp" />
+    <ClInclude Include="..\..\Engine\Light.hpp" />
+    <ClInclude Include="..\..\Engine\Main.hpp" />
+    <ClInclude Include="..\..\Engine\Material.hpp" />
+    <ClInclude Include="..\..\Engine\Mesh.hpp" />
+    <ClInclude Include="..\..\Engine\MouseLook.hpp" />
+    <ClInclude Include="..\..\Engine\MoveLight.hpp" />
+    <ClInclude Include="..\..\Engine\PNGReader.hpp" />
+    <ClInclude Include="..\..\Engine\RenderingManager.hpp" />
+    <ClInclude Include="..\..\Engine\ResourceManager.hpp" />
+    <ClInclude Include="..\..\Engine\ShaderData.hpp" />
+    <ClInclude Include="..\..\Engine\ShaderPropertyReader.hpp" />
+    <ClInclude Include="..\..\Engine\Sprite.hpp" />
+    <ClInclude Include="..\..\Engine\Texture.hpp" />
+    <ClInclude Include="..\..\Engine\Vertex.hpp" />
+    <ClInclude Include="..\..\Engine\WindowScene.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\3rd_party\tinyxml2-master\tinyxml2.cpp" />
+    <ClCompile Include="..\..\Engine\AABox.cpp" />
+    <ClCompile Include="..\..\Engine\Camera.cpp" />
+    <ClCompile Include="..\..\Engine\EntityManager.cpp" />
+    <ClCompile Include="..\..\Engine\Frustum.cpp" />
+    <ClCompile Include="..\..\Engine\Input.cpp" />
+    <ClCompile Include="..\..\Engine\Light.cpp" />
+    <ClCompile Include="..\..\Engine\Main.cpp" />
+    <ClCompile Include="..\..\Engine\Material.cpp" />
+    <ClCompile Include="..\..\Engine\Mesh.cpp" />
+    <ClCompile Include="..\..\Engine\MouseLook.cpp" />
+    <ClCompile Include="..\..\Engine\MoveLight.cpp" />
+    <ClCompile Include="..\..\Engine\PNGReader.cpp" />
+    <ClCompile Include="..\..\Engine\RenderingManager.cpp" />
+    <ClCompile Include="..\..\Engine\ResourceManager.cpp" />
+    <ClCompile Include="..\..\Engine\ShaderPropertyReader.cpp" />
+    <ClCompile Include="..\..\Engine\Sprite.cpp" />
+    <ClCompile Include="..\..\Engine\Texture.cpp" />
+    <ClCompile Include="..\..\Engine\WindowScene.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
