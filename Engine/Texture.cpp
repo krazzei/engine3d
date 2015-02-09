@@ -8,7 +8,7 @@ Texture::Texture(unsigned int textureName, int textureType)
 
 Texture::~Texture()
 {
-	//TODO: make sure the texture is released from graphics memory.
+	glDeleteTextures(1, p_textureName);
 	delete p_textureName;
 }
 
@@ -19,8 +19,6 @@ unsigned int* Texture::GetTextureName()
 
 int* Texture::GetTextureType()
 {
-	//aparently using c style cast is bad practice in c++
-	//FIXME
 	return (int*)&_type;
 }
 

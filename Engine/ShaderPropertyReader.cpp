@@ -46,7 +46,6 @@ bool ShaderPropertyReader::ReadLine(std::string line)
 
 	std::vector<std::string> splitLine = SplitString(line, ' ');
 	
-	//if(line.find(IN) != std::string::npos || line.find(UNIFORM) != std::string::npos || line.find(OUT) != std::string::npos)
 	if(splitLine[0] == UNIFORM)
 	{
 		// check if we already have this property.
@@ -69,35 +68,6 @@ bool ShaderPropertyReader::ReadLine(std::string line)
 
 IShaderData* ShaderPropertyReader::CreateShaderData(std::string loadName, std::string type, std::string name)
 {
-	/*std::string typeName;
-	list<char*> types = list<char*>();
-	types.push_back("float");
-	types.push_back("vec2");
-	types.push_back("vec3");
-	types.push_back("mat4");
-	types.push_back("mat3x4");
-	list<char*>::iterator iterator;
-	for(iterator = types.begin(); iterator != types.end(); iterator++)
-	{
-		if(line.find(iterator._Ptr->_Myval) != std::string::npos)
-		{
-			typeName = iterator._Ptr->_Myval;
-			break;
-		}
-	}*/
-	/*if(loadName == IN && (name == "vertexPosition_modelspace" || name == "vertexNoromal_modelspace" || name == "vertexUV"))
-	{
-		if(type == "vec2")
-		{
-			return (IShaderData*)(new ShaderData<glm::vec2>(glGetAttribLocation(_programId, name.c_str()), 1, glm::vec2()));
-		}
-		else if(type == "vec3")
-		{
-			return (IShaderData*)(new ShaderData<glm::vec3>(glGetAttribLocation(_programId, name.c_str()), 1, glm::vec3()));
-		}
-	}
-	else if(loadName != IN)*/
-	
 	if(type == "float")
 	{
 		return (IShaderData*)(new ShaderData<float>(glGetUniformLocation(_programId, name.c_str()), 1, 0));

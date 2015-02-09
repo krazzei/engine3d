@@ -30,6 +30,8 @@ void MouseLook::Update(double deltaTime)
 {
 	glm::vec2 delta = Input::GetDeltaMousePos();
 	
+	// TODO: make a rotation matrix, like this one, but just multiply it with the current transform matrix.
+	// then translate the result (or the other way around?). Tyler White 20150208
 	_rotation = glm::rotate(_rotation, (float)(delta.x * deltaTime) * SENSITIVITY, glm::vec3(0,1,0));
 	_rotation = glm::rotate(_rotation, (float)(-delta.y * deltaTime) * SENSITIVITY, glm::vec3(1,0,0));
 

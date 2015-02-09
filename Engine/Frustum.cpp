@@ -1,15 +1,11 @@
-
 #include "Frustum.hpp"
 
-//frustum
 Frustum::Frustum()
 {
-
 }
 
 Frustum::~Frustum()
 {
-
 }
 
 void Frustum::SetCamInternals(float angle, float ratio, float nearD, float farD)
@@ -164,7 +160,9 @@ int Frustum::BoxInFrustum(AABox box)
 	return result;
 }
 
-//Plane
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~ PLANE DEFINITION ~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+// TODO: split these up into different files.
+
 Plane::Plane( glm::vec3 v1, glm::vec3 v2, glm::vec3 v3)
 {
 	SetPoints(v1, v2, v3);

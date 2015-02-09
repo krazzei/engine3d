@@ -29,7 +29,6 @@ ResourceManager* ResourceManager::Instance()
 ResourceManager::ResourceManager()
 {
 	p_pngReader = new PNGReader();
-	//_numTabs = 0;
 	if((WORKING_DIRECTORY = _getcwd(NULL, 0)) == NULL)
 	{
 		std::cout << "get cwd error!";
@@ -61,7 +60,6 @@ void ResourceManager::LoadTexture(char* textureFileName, unsigned int** textureN
 
 		glBindTexture(GL_TEXTURE_2D, **textureName);
 
-		//is this the best way?
 		if(texture->channels == 3)
 		{
 			glTexImage2D(GL_TEXTURE_2D, 0, 3, texture->Width, texture->Height, 0, GL_RGB, GL_UNSIGNED_BYTE, (GLvoid*)texture->Data);
@@ -74,7 +72,6 @@ void ResourceManager::LoadTexture(char* textureFileName, unsigned int** textureN
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-		//Delete?
 		if(texture->Data != NULL)
 		{
 			free(texture->Data);
@@ -94,7 +91,7 @@ void ResourceManager::LoadTexture(char* textureFileName, unsigned int** textureN
 //this was a quick and dirty way to read a collada file, this WILL change!
 void ResourceManager::LoadMesh(char* meshPath, float** vertices, unsigned short** indices)
 {
-	char* dir = new char[200];//(char*)malloc(sizeof(char) * 200);
+	char* dir = new char[200];
 	ResourcesDirectory(meshPath, dir);
 	XMLDocument* doc = new XMLDocument();
 	XMLError loadOkay = doc->LoadFile(dir);

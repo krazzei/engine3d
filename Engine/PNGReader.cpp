@@ -62,13 +62,6 @@ Image* PNGReader::LoadPNG(char* texturePath)
 		return NULL; //out of memory.
 	}
 
-	//TODO: need to do png error handeling with png's longjmp()
-	/*if (setjmp(pngPtr->jumpbuf))
-	{
-		png_destroy_read_struct(&pngPtr, &pngInfo, NULL);
-		return NULL;
-	}*/
-
 	png_init_io(pngPtr, filePointer); //initialize the pointer
 	png_set_sig_bytes(pngPtr, 8); //lets the pngLib know we checked the header.
 	png_read_info(pngPtr, pngInfo); //read up to the first IDAT
@@ -114,7 +107,6 @@ Image* PNGReader::LoadPNG(char* texturePath)
 	png_read_update_info(pngPtr, pngInfo);
 
 	unsigned int rowBytes = png_get_rowbytes(pngPtr, pngInfo);
-	//still don't know why I can't just allocat a "blob" of memeory and have png read to it but. . .
 	//this is needed due to the differences in pnglib's reading and openGL's texture creation.
 	unsigned char** rowPointers = new unsigned char*[*height];
 

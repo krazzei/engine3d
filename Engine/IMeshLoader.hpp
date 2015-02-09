@@ -1,3 +1,6 @@
+#ifndef _IMESHLOADER_H
+#define _IMESHLOADER_H
+
 #include "Mesh.hpp"
 #include "Camera.hpp"
 #include "ResourceManager.hpp"
@@ -15,3 +18,4 @@ class IMeshLoader
 public:
 	virtual ~IMeshLoader() {}
 };
+#endif

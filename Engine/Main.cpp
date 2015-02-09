@@ -28,46 +28,6 @@
 #include <stdlib.h>
 #include <ctime>
 
-bool toMax = false;
-float amount = 0.075f;
-glm::vec3 PingPong(glm::mat4* position, glm::vec3 direction, float min, float max)
-{
-	glm::vec3 newPos = glm::vec3(0,0,0);
-
-	if(toMax)
-	{
-		newPos = direction * amount;
-	}
-	else
-	{
-		newPos = direction * (amount * -1);
-	}
-
-	*position = glm::translate(*position, newPos);
-
-	newPos += glm::vec3((*position)[3].x, (*position)[3].y, (*position)[3].z);
-
-	direction = glm::vec3(newPos.x * direction.x, newPos.y * direction.y, newPos.z * direction.z);
-	float distance = glm::distance(glm::vec3(0,0,0), direction);
-
-	if(min < 0 && !toMax)
-	{
-		distance *= -1;
-	}
-
-	if(distance > max)
-	{
-		toMax = false;
-	}
-	
-	if(distance < min)
-	{
-		toMax = true;
-	}
-
-	return newPos;
-}
-
 int main(int argc, int *argv[])
 {
 	bool running = true;
@@ -93,6 +53,12 @@ int main(int argc, int *argv[])
 
 	if (!InitializeRenderer())
 	{
+		exit(EXIT_FAILURE);
+	}
+
+	if (!GLEW_VERSION_1_5)
+	{
+		// TODO: error message.
 		exit(EXIT_FAILURE);
 	}
 
@@ -138,12 +104,9 @@ int main(int argc, int *argv[])
 
 	MouseLook* look = new MouseLook();
 	look->SetTransform(&transform);
-	//frontMesh->SetTransform(&transform);
 
 	MoveLight* moveLight = new MoveLight();
 	moveLight->SetTransform(&lightTransform);
-
-	//transform = glm::translate(transform, glm::vec3(0,0,50));
 
 	glfwSwapInterval(1);
 
@@ -167,9 +130,6 @@ int main(int argc, int *argv[])
 		//	3 + nl
 		RenderingManager::Instance()->Update();
 		EntityManager::Instance()->UpdateEntities(deltaTime);
-
-		//should be handled by an entity.
-		//PingPong(&transform, glm::vec3(1,0,0), -50, 50);
 
 		running = !glfwGetKey(GLFW_KEY_ESC) && glfwGetWindowParam(GLFW_OPENED);
 		deltaTime = glfwGetTime() - frameStart;

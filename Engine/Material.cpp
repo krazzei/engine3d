@@ -3,6 +3,7 @@
 #include "../3rd_party/glm-0.9.4.2/glm/glm.hpp"
 
 //should just be fed the program id and shader data.
+//should it? Just playing devil's advocate because I can't remember why the above comment was written. Tyler White 20150208.
 Material::Material(const char* vertexSourceLocation, const char* fragmentSourceLocation)
 {
 	_programID = ResourceManager::Instance()->LoadShader(vertexSourceLocation, fragmentSourceLocation);
@@ -36,13 +37,10 @@ void Material::Enable()
 	for(currentTexture = _textureNames.begin();currentTexture != _textureNames.end();currentTexture++, textureNumber++) //is this too confusing/hard to read?
 	{
 		glActiveTexture(textureNumber);
-		//PrintGLError();
 		currentTexture._Ptr->_Myval->BindTexture();
-		//PrintGLError();
 	}
 
 	glUseProgram(_programID);
-	//PrintGLError();
 	//must be after because gl does not know what program to send the data to.
 	for(int i = 0;i<_dataCount;i++)
 	{

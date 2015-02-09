@@ -1,3 +1,5 @@
+#ifndef _FRUSTUM_H
+#define _FRUSTUM_H
 
 #include "AABox.hpp"
 #include "../3rd_party/glm-0.9.4.2/glm/glm.hpp"
@@ -55,3 +57,5 @@ public:
 	int SphereInFrustum(glm::vec3 point, float radius);
 	int BoxInFrustum(AABox box);
 };
+
+#endif

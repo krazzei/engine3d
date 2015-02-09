@@ -35,7 +35,6 @@ public:
 	virtual		void				LoadTexture(char* fileName);
 	virtual		Material*			GetMaterial();
 	virtual		AABox*				GetAABox();
-	virtual		unsigned int*		GetLightCount();
 	virtual		void				SetTransform(glm::mat4* transform);
 	
 				void				Translate(glm::vec3 pos);
@@ -47,8 +46,6 @@ protected:
 	unsigned int _vaoID;
 	unsigned int _vboId;
 	unsigned int _elementBufferId;
-
-	unsigned int* p_lightCount;
 
 	//shader uniform locations
 	int _matrixID;

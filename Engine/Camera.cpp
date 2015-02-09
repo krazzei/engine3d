@@ -48,12 +48,9 @@ Camera::Camera(int width, int height, ViewPerspective perspectiveMode, float fov
 	}
 
 	//the view matrix is a matrix that is used to convert the world coordinates to camaera coordinates, this matrix positions the camera in world space too.
-	//						at 0,0,-3 world space, looks at 0,0,0 and 0,1,0 is up.
 	p_viewMatrix = new glm::mat4(1);
 	*p_viewMatrix = glm::lookAt(worldPosition, lookAtPosition, glm::vec3(0,1,0));
-	//frustum.setCamDef(worldPosition, lookAtPosition, glm::vec3(0,1,0));
 	_frustum.SetCamDef(p_viewMatrix);
-	//_frustum.setFrustum(_viewMatrix * _perspeciveMatrix);
 }
 
 Camera::~Camera()
@@ -62,23 +59,15 @@ Camera::~Camera()
 
 void Camera::Update()
 {
-	//_frustum.setCamDef(_viewMatrix);
-
-	glClear(_clearFlags);
-
-	//if(_clearFlags == GL_SCISSOR_BIT)
-	//{
-	//	glEnable(GL_SCISSOR_TEST);
-	//	//PrintGLError();
-	//}
-	//else
-	//{
-	//	glDisable(GL_SCISSOR_TEST);
-	//	//PrintGLError();
-	//	//TODO: ablity to handle multiple cameras
-	//	
-	////	PrintGLError();
-	//}
+	if(_clearFlags == GL_SCISSOR_BIT)
+	{
+		glEnable(GL_SCISSOR_TEST);
+	}
+	else
+	{
+		glDisable(GL_SCISSOR_TEST);
+		//TODO: ablity to handle multiple cameras
+	}
 }
 
 float* Camera::GetAspecRatio()

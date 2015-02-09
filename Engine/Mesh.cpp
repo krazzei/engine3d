@@ -40,9 +40,9 @@ Mesh::Mesh(glm::vec3 worldPos) : IDrawable()
 {
 	//because IDrawable.h can't have RenderingManager.h and IDrawable doesn't have a defined constructor,
 	//the implementers of IDrawable add themselves to the RenderingManager.
+	//this avoids the cyclic dependency issue, not sure if its the best solution though.
 	RenderingManager::Instance()->Add((IDrawable*)this);
 
-	p_lightCount = new unsigned int(0);
 	_vboId = 0;
 	_elementBufferId = 0;
 	unsigned short* indices = new unsigned short[36];
@@ -89,19 +89,14 @@ Mesh::Mesh(glm::vec3 worldPos) : IDrawable()
 		indices[i] = i;
 	}
 
-	//VBO (GenBuffer, BindBuffer, BufferData) is an openGL 1.5 core feature,
-	//so just check for that and all should be good.
-	if(GLEW_VERSION_1_5)
-	{
-		printf("we are on opengl 1.5!\n");
-		glGenBuffers(1, &_vboId);
-		glBindBuffer(GL_ARRAY_BUFFER, _vboId);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(vertex) * 36, vertices, GL_STATIC_DRAW);
+	
+	glGenBuffers(1, &_vboId);
+	glBindBuffer(GL_ARRAY_BUFFER, _vboId);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertex) * 36, vertices, GL_STATIC_DRAW);
 
-		glGenBuffers(1, &_elementBufferId);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _elementBufferId);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned short) * 36, indices, GL_STATIC_DRAW);
-	}
+	glGenBuffers(1, &_elementBufferId);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _elementBufferId);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned short) * 36, indices, GL_STATIC_DRAW);
 
 	p_material = new Material("../Engine3D_express/Resources/light_texture.vert", "../Engine3D_express/Resources/light_texture.frag");
 
@@ -157,8 +152,6 @@ Mesh::~Mesh()
 void Mesh::InitializeVAO()
 {
 	glBindVertexArray(_vaoID);
-	//i think this would work if we had the texture name at this time.
-	//_material->Enable();
 	
 	//this happens first so we don't have to have multiple location checks.
 	glBindBuffer(GL_ARRAY_BUFFER, _vboId);
@@ -189,44 +182,33 @@ void Mesh::InitializeVAO()
 
 void Mesh::Draw(glm::mat4* projectionMatrix, glm::mat4* viewMatrix)
 {
-	//this might be able to be added to the vao.
 	p_material->Enable();
-	//PrintGLError();
 	
 	//Let the gpu calculate the MVP matrix
+	// This might worth testing if its faster on the GPU or CPU, after writing this I would think just doing it on CPU
+	// and then copying one matrix to the GPU would be faster ... Tyler White 20150208
 	glUniformMatrix4fv(_matrixID, 1, GL_FALSE, &((*p_modelMatrix)[0][0]));
-//	PrintGLError();
 	glUniformMatrix4fv(_projectionID, 1, GL_FALSE, &((*projectionMatrix)[0][0]));
-//	PrintGLError();
 	glUniformMatrix4fv(_viewID, 1, GL_FALSE, &((*viewMatrix)[0][0]));
-//	PrintGLError();
 
 #ifndef VAO
 	glEnableVertexAttribArray(0); //submitting vertices on stream 0.
 	glEnableVertexAttribArray(1); //submitting normals on stream 1.
 	glEnableVertexAttribArray(2); //submitting texcoords on stream 2.
-//	PrintGLError();
 	glBindBuffer(GL_ARRAY_BUFFER, _vboId);
-//	PrintGLError();
 	//vertext coordinates on 0
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(vertex), BUFFER_OFFSET(0));
-//	PrintGLError();
 	//normals on 1
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(vertex), BUFFER_OFFSET(sizeof(float) * 3));
-//	PrintGLError();
 	//uv coordinates on 2
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(vertex), BUFFER_OFFSET(sizeof(float) * 6));
-//	PrintGLError();
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _elementBufferId);
-//	PrintGLError();
 #else
 	glBindVertexArray(_vaoID);
-//	PrintGLError();
 #endif
 
 	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_SHORT, BUFFER_OFFSET(0));
-//	PrintGLError();
 	
 #ifndef VAO
 	glDisableVertexAttribArray(0);
@@ -240,20 +222,20 @@ void Mesh::Draw(glm::mat4* projectionMatrix, glm::mat4* viewMatrix)
 #else
 	glBindVertexArray(0);
 #endif
-	//not sure if this should be part of the vao or not...
-	//can't be because we need the shader enabled for drawing (glDrawElements)
+
 	p_material->Disable();
-	*p_lightCount = 0;
 }
 
+// This is untested! Tyler White 20150208
 void Mesh::Translate(glm::vec3 pos)
 {
-//	_modelMatrix = glm::translate(_modelMatrix, pos);
-//	_boundingBox.setBox(glm::vec3(_modelMatrix[3].x -1, _modelMatrix[3].y - 1, _modelMatrix[3].z - 1), 2, 2, 2);
+	*p_modelMatrix = glm::translate(*p_modelMatrix, pos);
+	p_boundingBox->SetTransform(p_modelMatrix);
 }
 
 void Mesh::LoadMesh(char* fileName)
 {
+	// TODO: load a mesh from data files (collada, mb, fbx, etc).
 //	ResourceManager::Instance()->LoadMesh(fileName, &_vertices, &_indices);
 }
 
@@ -265,11 +247,6 @@ void Mesh::LoadTexture(char* fileName)
 Material* Mesh::GetMaterial()
 {
 	return p_material;
-}
-
-unsigned int* Mesh::GetLightCount()
-{
-	return p_lightCount;
 }
 
 AABox* Mesh::GetAABox()
