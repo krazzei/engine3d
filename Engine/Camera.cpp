@@ -67,6 +67,7 @@ void Camera::Update()
 	{
 		glDisable(GL_SCISSOR_TEST);
 		//TODO: ablity to handle multiple cameras
+		glClear(_clearFlags);
 	}
 }
 

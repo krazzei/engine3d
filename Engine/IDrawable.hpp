@@ -27,6 +27,5 @@ public:
 	virtual		void				Draw(glm::mat4* projectionMatrix, glm::mat4* viewMatrix)		= 0;
 	virtual		Material*			GetMaterial()													= 0;
 	virtual		AABox*				GetAABox()														= 0;
-	virtual		unsigned int*		GetLightCount()													= 0;
 };
 #endif

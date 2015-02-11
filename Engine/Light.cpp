@@ -25,7 +25,6 @@ void Light::Update(std::list<IDrawable*>* effectedObjects)
 	int lightLocation = 0;
 
 	_lightInfo[0] = glm::vec4((*p_transform)[3].xyz, 1);
-	printf("light pos (%f,%f,%f)\n", _lightInfo[0].x, _lightInfo[0].y, _lightInfo[0].z);
 
 	std::list<IDrawable*>::iterator drawable;
 	for(drawable = effectedObjects->begin(); drawable != effectedObjects->end(); drawable++)
